@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hold Shift Checkbox</title>
+    <style>
+        *,
+        *:after,
+        *:before {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            box-sizing: inherit;
+            font-family: sans-serif;
+            font-size: 18px;
+            width: 100%;
+            height: 100%;
+        }
+
+        body 
+        {
+            background-color: #FFBF04;
+     }
+
+        .checkbox-box {
+            background-color: white; 
+            width: 20%;
+            height: 60%;
+            margin: 50px auto;
+            border-radius: 5px;
+            overflow: auto;
+          
+        }
+
+        .checkbox-container {
+            box-sizing: border-box;
+            display: flex;
+            margin: 5px 0;
+            border-bottom: 1px solid black;
+            padding: 15px;
+        }
+
+
+        .checkbox-container:last-child {
+
+            border-bottom: none
+        }
+        input[type="checkbox"] {
+            margin-left: 10px;
+            margin-right: 20px;
+        }
+
+        input[type="checkbox"]:checked ~ p {
+            text-decoration: line-through;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="checkbox-box">
+            <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>This is an inbox layout.</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Check one item</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Hold down your shift key</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Check a lower item</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Everythin inbetweem should also be set to checked</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Try do it with out any libraries</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Just regular Javascript</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Good Luck</p>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox">
+                    <p>Dont forget to tweet your result</p>
+                </div>
+    </div>
+<script>
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach((check,i) => check.setAttribute('data-index', i));
+    checkboxes.forEach((check,i) => check.addEventListener('change',checkCheckboxes));
+    var isShiftPressed = false;
+    var positions = {};
+function checkCheckboxes(e) {
+    if(isShiftPressed)  {
+    positions.final = e.target
+ 
+    let initVal = positions.initial.dataset.index;;
+    let finishVal = positions.final.dataset.index
+   
+        checkboxes.forEach((_, i, arr) => {
+            if(finishVal > initVal)
+            {
+                if(i > initVal && i < finishVal)
+                {
+                    arr[i].checked = true;
+                }
+            }
+            else 
+            {
+                if(i < initVal && i > finishVal)
+                {
+                    arr[i].checked = true;
+                }
+            }
+        });
+    
+    }
+    else {
+        positions.initial = e.target
+    }
+
+}
+
+function pressedShift(e)
+{
+    if(e.keyCode === 16) isShiftPressed = true;
+}
+function releasedShift(e) {isShiftPressed = false}
+
+window.addEventListener('keydown', pressedShift);
+window.addEventListener('keyup', releasedShift);
+</script>
+</body>
+</html>
